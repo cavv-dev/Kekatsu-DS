@@ -1,0 +1,188 @@
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Cancel"
+msgstr "Annulla"
+
+msgid "Yes"
+msgstr "Si"
+
+msgid "No"
+msgstr "No"
+
+msgid "Browse"
+msgstr "Sfoglia"
+
+msgid "Search by title"
+msgstr "Cerca per titolo"
+
+msgid "Browse all"
+msgstr "Sfoglia tutto"
+
+msgid "No database loaded or initialized"
+msgstr "Nessun database caricato o inizializzato"
+
+msgid "Page"
+msgstr "Pagina"
+
+msgid "Previous"
+msgstr "Indietro"
+
+msgid "Next"
+msgstr "Avanti"
+
+msgid "Platform"
+msgstr "Piattaforma"
+
+msgid "Region"
+msgstr "Regione"
+
+msgid "Author"
+msgstr "Autore"
+
+msgid "Version"
+msgstr "Versione"
+
+msgid "Download"
+msgstr "Scarica"
+
+msgid "Error"
+msgstr "Errore"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Prompt"
+msgstr "Richiesta"
+
+msgid "Download failed"
+msgstr "Download fallito"
+
+msgid "could not create download directory"
+msgstr "impossibile creare la directory di download"
+
+msgid "bad response status"
+msgstr "stato di risposta non valido"
+
+msgid "could not initialize download"
+msgstr "impossibile inizializzare il download"
+
+msgid "could not create file"
+msgstr "impossibile creare il file"
+
+msgid "could not perform download"
+msgstr "impossibile eseguire il download"
+
+msgid "Download completed"
+msgstr "Download completato"
+
+msgid "Extracting content..."
+msgstr "Estraendo il contenuto..."
+
+msgid "Extraction failed"
+msgstr "Estrazione fallita"
+
+msgid "could not open file"
+msgstr "impossibile aprire il file"
+
+msgid "could not locate file"
+msgstr "impossibile trovare il file"
+
+msgid "could not read file"
+msgstr "impossibile leggere il file"
+
+msgid "could not write file"
+msgstr "impossibile scrivere il file"
+
+msgid "Do you wish to extract the content in a separate directory?"
+msgstr "Vuoi estrarre il contenuto in una cartella separata?"
+
+msgid "Failed to initialize database"
+msgstr "Inizializzazione database fallita"
+
+msgid "download failed"
+msgstr "download fallito"
+
+msgid "file not found"
+msgstr "file non trovato"
+
+msgid "Database open failed"
+msgstr "Apertura database fallita"
+
+msgid "invalid version"
+msgstr "versione non valida"
+
+msgid "invalid format"
+msgstr "formato non valido"
+
+msgid "Database loaded successfully"
+msgstr "Database caricato correttamente"
+
+msgid "entries"
+msgstr "entry"
+
+msgid "Databases"
+msgstr "Database"
+
+msgid "No databases found"
+msgstr "Nessun database trovato"
+
+msgid "Loading database..."
+msgstr "Caricando database..."
+
+msgid "Settings"
+msgstr "Impostazioni"
+
+msgid "Downloads directory"
+msgstr "Cartella download"
+
+msgid "Use platform-specific directories (E.g. nds, gba)"
+msgstr "Usa cartelle specifiche per piattaforma (Es. nds, gba)"
+
+msgid "Color scheme"
+msgstr "Schema colore"
+
+msgid "Check for updates on start"
+msgstr "Controlla aggiornamenti all'avvio"
+
+msgid "Language"
+msgstr "Lingua"
+
+msgid "Path can not be empty"
+msgstr "Il percorso non puo' essere vuoto"
+
+msgid "Directory does not exist. Do you want to create it?"
+msgstr "La cartella non esiste. Vuoi crearla?"
+
+msgid "Failed to create directory"
+msgstr "Impossibile creare la cartella"
+
+msgid "Italian"
+msgstr "Italiano"
+
+msgid "Check for updates"
+msgstr "Controlla aggiornamenti"
+
+msgid "Could not download update"
+msgstr "Impossibile scaricare aggiornamento"
+
+msgid "Extracting update files..."
+msgstr "Estraendo file di aggiornamento..."
+
+msgid "Could not extract update files"
+msgstr "Impossibile estrarre file di aggiornamento"
+
+msgid "Update downloaded successfully. Do you want to reboot now?"
+msgstr "Aggiornamento scaricato con successo. Vuoi riavviare adesso?"
+
+msgid "Checking for updates..."
+msgstr "Controllando aggiornamenti..."
+
+msgid "New version found"
+msgstr "Nuova versione trovata"
+
+msgid "Update"
+msgstr "Aggiorna"
+
+msgid "Ignore"
+msgstr "Ignora"

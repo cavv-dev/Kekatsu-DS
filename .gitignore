@@ -1,0 +1,7 @@
+build/
+Kekatsu.elf
+Kekatsu.nds
+release/
+Kekatsu-DS.zip
+version.txt
+.vscode/
