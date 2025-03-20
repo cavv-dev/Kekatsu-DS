@@ -1431,11 +1431,13 @@ void databasesMenu(void)
     size_t dbCount;
     Database* dbList = getDatabaseList(&dbCount);
 
+    size_t displayedDatabasesCount = min(dbCount, MAX_DATABASES_DISPLAY);
+
     GuiText dbBtnTxtNames[dbCount];
     GuiText dbBtnTxtValues[dbCount];
     GuiButton dbBtns[dbCount];
 
-    for (size_t i = 0; i < dbCount && i < MAX_DATABASES_DISPLAY; i++) {
+    for (size_t i = 0; i < displayedDatabasesCount; i++) {
         dbBtnTxtNames[i] = newGuiText(getDatabaseName(dbList[i]), GUI_TEXT_SIZE_SMALL, col(COLOR_TEXT_2));
         setGuiTextPos(dbBtnTxtNames[i], 10, 0);
         setGuiTextAlignment(dbBtnTxtNames[i], GUI_TEXT_H_ALIGN_LEFT, GUI_TEXT_V_ALIGN_MIDDLE);
@@ -1471,7 +1473,7 @@ void databasesMenu(void)
         guiLoop();
         drawScreens();
 
-        for (size_t i = 0; i < dbCount; i++) {
+        for (size_t i = 0; i < displayedDatabasesCount; i++) {
             if (getGuiButtonState(dbBtns[i]) != GUI_BUTTON_STATE_CLICKED)
                 continue;
 
@@ -1497,11 +1499,13 @@ void databasesMenu(void)
     freeGuiBox(btnBgUsed);
     freeGuiBox(btnBgHover);
 
-    for (size_t i = 0; i < dbCount && i < MAX_DATABASES_DISPLAY; i++) {
+    for (size_t i = 0; i < displayedDatabasesCount; i++) {
         freeGuiText(dbBtnTxtNames[i]);
         freeGuiText(dbBtnTxtValues[i]);
         freeGuiButton(dbBtns[i]);
+    }
 
+    for (size_t i = 0; i < dbCount; i++) {
         if (dbList[i] != db)
             freeDatabase(dbList[i]);
     }
