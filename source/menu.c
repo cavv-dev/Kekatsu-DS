@@ -1478,9 +1478,7 @@ void databasesMenu(void)
                 continue;
 
             Database d = dbList[i];
-
-            if (!loadDatabase(d))
-                freeDatabase(d);
+            loadDatabase(d);
 
             switchMenu(MENU_DATABASES);
         }
