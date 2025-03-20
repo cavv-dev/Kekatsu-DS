@@ -31,7 +31,7 @@ Entry newEntry(const char* title, const char* platform, char* region, const char
     e->boxartUrl = strdup(boxartUrl);
 
     e->extractItems = malloc(sizeof(struct EntryExtractItem) * extractItemsCount);
-    for (int i = 0; i < extractItemsCount; i++) {
+    for (size_t i = 0; i < extractItemsCount; i++) {
         e->extractItems[i].outPath = strdup(extractItems[i].outPath);
         e->extractItems[i].inPath = strdup(extractItems[i].outPath);
     }
@@ -50,7 +50,7 @@ void freeEntry(Entry e)
     free(e->url);
     free(e->boxartUrl);
 
-    for (int i = 0; i < e->extractItemsCount; i++) {
+    for (size_t i = 0; i < e->extractItemsCount; i++) {
         free(e->extractItems[i].outPath);
         free(e->extractItems[i].inPath);
     }
