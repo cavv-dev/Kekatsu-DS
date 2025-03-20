@@ -243,7 +243,7 @@ DatabaseInitStatus initDatabase(Database d)
     case DATABASE_TYPE_LOCAL:
         d->path = strdup(d->value);
 
-        if (!pathExists(d->value))
+        if (!pathExists(d->path))
             return DATABASE_INIT_ERR_FILE_NOT_FOUND;
 
         break;
