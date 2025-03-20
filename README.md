@@ -16,6 +16,27 @@ Concept inspired by [pkgi-psp](https://github.com/bucanero/pkgi-psp) and [Univer
 - Customizable color scheme
 - Localization support
 
+## Quick setup instructions
+1. Download `Kekatsu.nds` from the [latest release](https://github.com/cavv-dev/Kekatsu-DS/releases/latest).
+
+2. Place `Kekatsu.nds` anywhere on your SD card.
+
+3. Create a folder named `Kekatsu` in the root directory of your SD card. *(The "root" is the topmost directory of your SD card. See [this image](https://dsi.cfw.guide/assets/images/sdroot/en_US.png) for reference.)*
+
+4. Create a text file named `databases.txt` in the `Kekatsu` folder.
+
+5. **(Optional)** If you want to use the [UDB-Kekatsu-DS](https://github.com/cavv-dev/UDB-Kekatsu-DS) database, copy the following text into `databases.txt`:
+    ```
+    UDB-Kekatsu-DS	https://gist.githubusercontent.com/cavv-dev/3c0cbc1b63ac8ca0c1d9f549403afbf1/raw/
+    ```
+    Make sure that the "space" between the name and the URL is a **tab** character, not a space character.
+
+6. Start *Kekatsu* on your system.
+
+7. Navigate to the *Databases* menu by tapping its icon on the navbar. You should see the databases you added in the `databases.txt` file.
+
+8. Tap on the database you want to use, and *Kekatsu* will load it.
+
 ## Databases setup
 Kekatsu expects a `databases.txt` file to load as the list of available databases. This file has to be located in the `Kekatsu` directory on the root of the SD card.
 
