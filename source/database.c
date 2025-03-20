@@ -224,7 +224,7 @@ DatabaseInitStatus initDatabase(Database d)
         safeStr(dbFileName);
 
         char dbFilePath[PATH_MAX];
-        snprintf(dbFilePath, sizeof(dbFilePath), "%s/%s", CACHE_DIR, dbFileName);
+        joinPath(dbFilePath, CACHE_DIR, dbFileName);
         free(dbFileName);
 
         d->path = strdup(dbFilePath);
