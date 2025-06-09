@@ -3,6 +3,7 @@
 typedef enum {
     LANG_EN,
     LANG_IT,
+    LANG_NL,
     LANGS_COUNT
 } LanguageEnum;
 

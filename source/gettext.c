@@ -4,6 +4,7 @@
 
 #include "en_lang.h"
 #include "it_lang.h"
+#include "nl_lang.h"
 #include <calico/types.h>
 #include <stdlib.h>
 #include <string.h>
@@ -232,6 +233,9 @@ void loadLanguage(LanguageEnum lang)
     switch (lang) {
     case LANG_IT:
         loadLanguageFromMemory(it_lang, it_lang_size);
+        break;
+    case LANG_NL:
+        loadLanguageFromMemory(nl_lang, nl_lang_size);
         break;
     default:
         loadLanguageFromMemory(en_lang, en_lang_size);
