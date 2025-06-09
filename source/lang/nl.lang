@@ -1,0 +1,191 @@
+msgid "Ok"
+msgstr "Ok"
+
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nee"
+
+msgid "Browse"
+msgstr "Bladeren"
+
+msgid "Search by title"
+msgstr "Zoek op titel"
+
+msgid "Browse all"
+msgstr "Blader alle"
+
+msgid "No database loaded or initialized"
+msgstr "Geen database geladen of geïnitialiseerd"
+
+msgid "Page"
+msgstr "Pagina"
+
+msgid "Previous"
+msgstr "Vorige"
+
+msgid "Next"
+msgstr "Volgende"
+
+msgid "Platform"
+msgstr "Platform"
+
+msgid "Region"
+msgstr "Regio"
+
+msgid "Author"
+msgstr "Auteur"
+
+msgid "Version"
+msgstr "Versie"
+
+msgid "Download"
+msgstr "Downloaden"
+
+msgid "Error"
+msgstr "Fout"
+
+msgid "Info"
+msgstr "Info"
+
+msgid "Prompt"
+msgstr "Prompt"
+
+msgid "Download failed"
+msgstr "Download mislukt"
+
+msgid "could not create download directory"
+msgstr "kon geen downloadmap aanmaken"
+
+msgid "bad response status"
+msgstr "foute responsstatus"
+
+msgid "could not initialize download"
+msgstr "kon download niet initialiseren"
+
+msgid "could not create file"
+msgstr "kon geen bestand aanmaken"
+
+msgid "could not perform download"
+msgstr "kon geen download uitvoeren"
+
+msgid "Download completed"
+msgstr "Download voltooid"
+
+msgid "Extracting content..."
+msgstr "Inhoud uitpakken..."
+
+msgid "Extraction failed"
+msgstr "Uitpakken mislukt"
+
+msgid "could not open file"
+msgstr "Kon bestand niet openen"
+
+msgid "could not locate file"
+msgstr "Kon bestand niet vinden"
+
+msgid "could not read file"
+msgstr "Kon bestand niet lezen"
+
+msgid "could not write file"
+msgstr "Kon bestand niet schrijven"
+
+msgid "Do you wish to extract the content in a separate directory?"
+msgstr "Wil je de inhoud in een aparte map uitpakken?"
+
+msgid "Failed to initialize database"
+msgstr "Kon database niet initialiseren"
+
+msgid "download failed"
+msgstr "download mislukt"
+
+msgid "file not found"
+msgstr "bestand niet gevonden"
+
+msgid "Database open failed"
+msgstr "Kon database niet openen"
+
+msgid "invalid version"
+msgstr "Ongeldige versie"
+
+msgid "invalid format"
+msgstr "Ongeldig formaat"
+
+msgid "Database loaded successfully"
+msgstr "Database geladen"
+
+msgid "entries"
+msgstr "items"
+
+msgid "Databases"
+msgstr "Databases"
+
+msgid "No databases found"
+msgstr "Geen databases gevonden"
+
+msgid "Loading database..."
+msgstr "Database aan het laden..."
+
+msgid "Settings"
+msgstr "Instellingen"
+
+msgid "Downloads directory"
+msgstr "Downloads-map"
+
+msgid "Use platform-specific directories (E.g. nds, gba)"
+msgstr "Gebruik platformspecifieke mappen (bijv. nds, gba)"
+
+msgid "Color scheme"
+msgstr "Kleurenschema"
+
+msgid "Check for updates on start"
+msgstr "Controleer op updates bij het starten"
+
+msgid "Language"
+msgstr "Taal"
+
+msgid "Path can not be empty"
+msgstr "Pad mag niet leeg zijn"
+
+msgid "Directory does not exist. Do you want to create it?"
+msgstr "Map bestaat niet. Wil je het aanmaken?"
+
+msgid "Failed to create directory"
+msgstr "Kon map niet aanmaken"
+
+msgid "Italian"
+msgstr "Italiaans"
+
+msgid "Dutch"
+msgstr "Nederlands"
+
+msgid "Check for updates"
+msgstr "Controleer op updates"
+
+msgid "Could not download update"
+msgstr "Kon update niet downloaden"
+
+msgid "Extracting update files..."
+msgstr "Update bestanden uitpakken..."
+
+msgid "Could not extract update files"
+msgstr "Kon update bestanden niet uitpakken"
+
+msgid "Update downloaded successfully. Do you want to reboot now?"
+msgstr "Update gedownload. Wil je nu herstarten?"
+
+msgid "Checking for updates..."
+msgstr "Updates controleren..."
+
+msgid "New version found"
+msgstr "Nieuwe versie gevonden"
+
+msgid "Update"
+msgstr "Update"
+
+msgid "Ignore"
+msgstr "Negeer"
