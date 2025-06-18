@@ -129,7 +129,9 @@ Database getLastOpenedDatabase(void)
     char name[1024];
     char value[1024];
 
-    if (!fgets(line, sizeof(line), fp) || sscanf(line, "%[^\t]\t%s", name, value) != 2) {
+    if (!fgets(line, sizeof(line), fp)
+        || (sscanf(line, "%[^\t]\t%s", name, value) != 2
+            && sscanf(line, "%[^=]=%s", name, value) != 2)) {
         fclose(fp);
         return NULL;
     }
@@ -359,7 +361,8 @@ Database* getDatabaseList(size_t* databasesCount)
     char name[1024];
     char value[1024];
     while (fgets(line, sizeof(line), fp)) {
-        if (sscanf(line, "%[^\t]\t%s", name, value) != 2)
+        if (sscanf(line, "%[^\t]\t%s", name, value) != 2
+            && sscanf(line, "%[^=]=%s", name, value) != 2)
             continue;
 
         if (count >= capacity) {
