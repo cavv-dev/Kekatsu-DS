@@ -27,9 +27,8 @@ Concept inspired by [pkgi-psp](https://github.com/bucanero/pkgi-psp) and [Univer
 
 5. **(Optional)** If you want to use the [UDB-Kekatsu-DS](https://github.com/cavv-dev/UDB-Kekatsu-DS) database, copy the following text into `databases.txt`:
     ```
-    UDB-Kekatsu-DS	https://gist.githubusercontent.com/cavv-dev/3c0cbc1b63ac8ca0c1d9f549403afbf1/raw/
+    UDB-Kekatsu-DS=https://gist.githubusercontent.com/cavv-dev/3c0cbc1b63ac8ca0c1d9f549403afbf1/raw/
     ```
-    Make sure that the "space" between the name and the URL is a **tab** character, not a space character.
 
 6. Start *Kekatsu* on your system.
 
@@ -40,7 +39,7 @@ Concept inspired by [pkgi-psp](https://github.com/bucanero/pkgi-psp) and [Univer
 ## Databases setup
 Kekatsu expects a `databases.txt` file to load as the list of available databases. This file has to be located in the `Kekatsu` directory on the root of the SD card.
 
-Each line of the `databases.txt` file has to contain a name and a value separated by a tab character.
+Each line of the `databases.txt` file has to contain a name and a value separated by a '=' or '	' (tab) character.
 
 The name should be the display name of the database. The value must be either:
 - an HTTP(S) URL which returns a database in text response
