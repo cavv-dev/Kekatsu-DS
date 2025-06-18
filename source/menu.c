@@ -173,6 +173,13 @@ void addNavbarToGuiScreen(GuiScreen gs)
         addToGuiScreen(gs, navbar.btns[i], GUI_ELEMENT_TYPE_BUTTON);
 }
 
+// Handles the reset action by the user such as power button being pressed
+void handleReset(void)
+{
+    if(pmShouldReset())
+        menu = MENU_EXIT;
+}
+
 // Displays a keyboard interface to edit the given string
 // Returns true if the changes to the string have been saved, false if ignored
 bool keyboardEdit(char* str, size_t maxLength)
@@ -264,6 +271,8 @@ bool keyboardEdit(char* str, size_t maxLength)
             save = false;
             break;
         }
+
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -375,6 +384,8 @@ bool windowPrompt(const char* title, const char* message, const char* btn1Label,
             ret = false;
             break;
         }
+
+        handleReset();
     }
 
     freeGuiScreen(bottomScreen);
@@ -951,6 +962,7 @@ void browseMenu(void)
         }
 
         navbarSwitchMenu();
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1195,6 +1207,7 @@ void resultsMenu(void)
         drawScreens();
 
         navbarSwitchMenu();
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1345,6 +1358,7 @@ void entryMenu(void)
             switchMenu(MENU_DOWNLOAD);
 
         navbarSwitchMenu();
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1484,6 +1498,7 @@ void databasesMenu(void)
         }
 
         navbarSwitchMenu();
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1673,6 +1688,7 @@ void settingsMenu(void)
         }
 
         navbarSwitchMenu();
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1771,6 +1787,7 @@ void infoMenu(void)
         }
 
         navbarSwitchMenu();
+        handleReset();
     }
 
     freeGuiScreen(topScreen);
