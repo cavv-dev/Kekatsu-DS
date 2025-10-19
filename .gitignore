@@ -1,10 +1,7 @@
-build/
-Kekatsu.elf
-Kekatsu.nds
-release/
-Kekatsu-DS.zip
-version.txt
-.vscode/
+/build/
+/Kekatsu.nds
 /build.ninja
 /.ninja_deps
 /.ninja_log
+/release/
+/.vscode/
