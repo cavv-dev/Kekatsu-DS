@@ -1366,6 +1366,14 @@ static void databasesMenu(void)
 {
     menu = MENU_NONE;
 
+    size_t dbCount;
+    Database* dbList = getDatabaseList(&dbCount);
+
+    size_t currentPage = 1;
+    size_t totalPages = (dbCount + MAX_DATABASES_DISPLAY - 1) / MAX_DATABASES_DISPLAY;
+    if (totalPages == 0)
+        totalPages = 1;
+
     GuiScreen topScreen = newGuiScreen(GUI_SCREEN_LCD_TOP);
     GuiScreen bottomScreen = newGuiScreen(GUI_SCREEN_LCD_BOTTOM);
 
@@ -1382,6 +1390,18 @@ static void databasesMenu(void)
     setGuiTextPos(menuTitle, 128, 178);
     setGuiTextAlignment(menuTitle, GUI_TEXT_H_ALIGN_CENTER, GUI_TEXT_V_ALIGN_MIDDLE);
 
+    GuiText prevPageTxt = newGuiText(tr("Previous"), GUI_TEXT_SIZE_SMALL, col(COLOR_TEXT));
+    GuiText nextPageTxt = newGuiText(tr("Next"), GUI_TEXT_SIZE_SMALL, col(COLOR_TEXT));
+    setGuiTextPos(prevPageTxt, 26, 180);
+    setGuiTextPos(nextPageTxt, 230, 180);
+    setGuiTextAlignment(prevPageTxt, GUI_TEXT_H_ALIGN_LEFT, GUI_TEXT_V_ALIGN_MIDDLE);
+    setGuiTextAlignment(nextPageTxt, GUI_TEXT_H_ALIGN_RIGHT, GUI_TEXT_V_ALIGN_MIDDLE);
+
+    GuiImage lButtonIcon = newGuiImage(lButton_pngBitmap, lButton_pngPal, 16, 10, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage rButtonIcon = newGuiImage(rButton_pngBitmap, rButton_pngPal, 16, 10, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    setGuiImagePos(lButtonIcon, 6, 174);
+    setGuiImagePos(rButtonIcon, 234, 174);
+
     GuiText noDatabasesTxt = newGuiText(tr("No databases found"), GUI_TEXT_SIZE_MEDIUM, col(COLOR_TEXT_3));
     setGuiTextPos(noDatabasesTxt, 128, 80);
     setGuiTextAlignment(noDatabasesTxt, GUI_TEXT_H_ALIGN_CENTER, GUI_TEXT_V_ALIGN_MIDDLE);
@@ -1396,31 +1416,17 @@ static void databasesMenu(void)
 
     GuiBox btnBgHover = newGuiBox(SCREEN_WIDTH, 20, col(COLOR_PRIMARY));
 
-    addToGuiScreen(topScreen, bg, GUI_ELEMENT_TYPE_BOX);
-    addToGuiScreen(topScreen, brickColor1, GUI_ELEMENT_TYPE_IMAGE);
-    addToGuiScreen(topScreen, brickColor2, GUI_ELEMENT_TYPE_IMAGE);
-    addToGuiScreen(topScreen, menuTitle, GUI_ELEMENT_TYPE_TEXT);
-
-    addToGuiScreen(bottomScreen, bg, GUI_ELEMENT_TYPE_BOX);
-
-    // Get database list and create screen elements
-    size_t dbCount;
-    Database* dbList = getDatabaseList(&dbCount);
-
-    size_t displayedDatabasesCount = min(dbCount, MAX_DATABASES_DISPLAY);
-
     GuiText dbBtnTxtNames[dbCount];
     GuiText dbBtnTxtValues[dbCount];
     GuiButton dbBtns[dbCount];
 
-    for (size_t i = 0; i < displayedDatabasesCount; i++) {
+    for (size_t i = 0; i < dbCount; i++) {
         dbBtnTxtNames[i] = newGuiText(getDatabaseName(dbList[i]), GUI_TEXT_SIZE_SMALL, col(COLOR_TEXT_2));
         setGuiTextPos(dbBtnTxtNames[i], 10, 0);
         setGuiTextAlignment(dbBtnTxtNames[i], GUI_TEXT_H_ALIGN_LEFT, GUI_TEXT_V_ALIGN_MIDDLE);
         setGuiTextMaxWidth(dbBtnTxtNames[i], 236);
 
         dbBtnTxtValues[i] = newGuiText(getDatabaseValue(dbList[i]), GUI_TEXT_SIZE_SMALL, col(COLOR_TEXT_3));
-        setGuiTextPos(dbBtnTxtValues[i], 246, i * 20 + 10);
         setGuiTextAlignment(dbBtnTxtValues[i], GUI_TEXT_H_ALIGN_RIGHT, GUI_TEXT_V_ALIGN_MIDDLE);
         setGuiTextMaxWidth(dbBtnTxtValues[i], 236 - getGuiTextWidth(dbBtnTxtNames[i]));
 
@@ -1433,30 +1439,111 @@ static void databasesMenu(void)
             setGuiButtonBg(dbBtns[i], btnBg, btnBgHover);
 
         setGuiButtonLabel(dbBtns[i], dbBtnTxtNames[i]);
-        setGuiButtonPos(dbBtns[i], 0, i * 20);
-
-        addToGuiScreen(bottomScreen, dbBtns[i], GUI_ELEMENT_TYPE_BUTTON);
-        addToGuiScreen(bottomScreen, dbBtnTxtValues[i], GUI_ELEMENT_TYPE_TEXT);
     }
+
+    addToGuiScreen(topScreen, bg, GUI_ELEMENT_TYPE_BOX);
+    addToGuiScreen(topScreen, brickColor1, GUI_ELEMENT_TYPE_IMAGE);
+    addToGuiScreen(topScreen, brickColor2, GUI_ELEMENT_TYPE_IMAGE);
+    addToGuiScreen(topScreen, menuTitle, GUI_ELEMENT_TYPE_TEXT);
+
+    addToGuiScreen(bottomScreen, bg, GUI_ELEMENT_TYPE_BOX);
 
     if (dbCount == 0)
         addToGuiScreen(bottomScreen, noDatabasesTxt, GUI_ELEMENT_TYPE_TEXT);
 
     addNavbarToGuiScreen(bottomScreen);
 
+    bool firstRun = true;
+    bool prevPageShown = false;
+    bool nextPageShown = false;
+    size_t lastStartIndex = 0;
+    size_t lastEndIndex = 0;
+
     setActiveScreens(topScreen, bottomScreen);
     while (menu == MENU_NONE) {
         guiLoop();
+
+        bool prevPageAction = (pressed & KEY_L);
+        bool nextPageAction = (pressed & KEY_R);
+
+        if (prevPageAction && currentPage > 1) {
+            currentPage--;
+            firstRun = true;
+        } else if (nextPageAction && currentPage < totalPages) {
+            currentPage++;
+            firstRun = true;
+        }
+
+        // Update displayed databases when page changes
+        if (firstRun && dbCount > 0) {
+            firstRun = false;
+
+            size_t startIndex = (currentPage - 1) * MAX_DATABASES_DISPLAY;
+            size_t endIndex = min(startIndex + MAX_DATABASES_DISPLAY, dbCount);
+            size_t displayedCount = endIndex - startIndex;
+
+            // Remove previous page's database elements from bottom screen
+            for (size_t i = lastStartIndex; i < lastEndIndex; i++) {
+                removeFromGuiScreen(bottomScreen, dbBtns[i]);
+                removeFromGuiScreen(bottomScreen, dbBtnTxtValues[i]);
+            }
+
+            // Update prev page indicator
+            bool showPrev = (currentPage > 1);
+            if (showPrev && !prevPageShown) {
+                addToGuiScreen(topScreen, prevPageTxt, GUI_ELEMENT_TYPE_TEXT);
+                addToGuiScreen(topScreen, lButtonIcon, GUI_ELEMENT_TYPE_IMAGE);
+                prevPageShown = true;
+            } else if (!showPrev && prevPageShown) {
+                removeFromGuiScreen(topScreen, prevPageTxt);
+                removeFromGuiScreen(topScreen, lButtonIcon);
+                prevPageShown = false;
+            }
+
+            // Update next page indicator
+            bool showNext = (currentPage < totalPages);
+            if (showNext && !nextPageShown) {
+                addToGuiScreen(topScreen, nextPageTxt, GUI_ELEMENT_TYPE_TEXT);
+                addToGuiScreen(topScreen, rButtonIcon, GUI_ELEMENT_TYPE_IMAGE);
+                nextPageShown = true;
+            } else if (!showNext && nextPageShown) {
+                removeFromGuiScreen(topScreen, nextPageTxt);
+                removeFromGuiScreen(topScreen, rButtonIcon);
+                nextPageShown = false;
+            }
+
+            // Add databases for current page to bottom screen
+            for (size_t i = 0; i < displayedCount; i++) {
+                size_t dbIndex = startIndex + i;
+
+                setGuiButtonPos(dbBtns[dbIndex], 0, i * 20);
+                setGuiTextPos(dbBtnTxtValues[dbIndex], 246, i * 20 + 10);
+
+                addToGuiScreen(bottomScreen, dbBtns[dbIndex], GUI_ELEMENT_TYPE_BUTTON);
+                addToGuiScreen(bottomScreen, dbBtnTxtValues[dbIndex], GUI_ELEMENT_TYPE_TEXT);
+            }
+
+            lastStartIndex = startIndex;
+            lastEndIndex = endIndex;
+        }
+
         drawScreens();
 
-        for (size_t i = 0; i < displayedDatabasesCount; i++) {
-            if (getGuiButtonState(dbBtns[i]) != GUI_BUTTON_STATE_CLICKED)
-                continue;
+        // Check for database selection
+        if (dbCount > 0) {
+            size_t startIndex = (currentPage - 1) * MAX_DATABASES_DISPLAY;
+            size_t endIndex = min(startIndex + MAX_DATABASES_DISPLAY, dbCount);
 
-            Database d = dbList[i];
-            loadDatabase(d);
+            for (size_t i = startIndex; i < endIndex; i++) {
+                if (getGuiButtonState(dbBtns[i]) != GUI_BUTTON_STATE_CLICKED)
+                    continue;
 
-            switchMenu(MENU_DATABASES);
+                Database d = dbList[i];
+                loadDatabase(d);
+
+                switchMenu(MENU_DATABASES);
+                break;
+            }
         }
 
         navbarSwitchMenu();
@@ -1468,12 +1555,16 @@ static void databasesMenu(void)
     freeGuiImage(brickColor1);
     freeGuiImage(brickColor2);
     freeGuiText(menuTitle);
+    freeGuiText(prevPageTxt);
+    freeGuiText(nextPageTxt);
+    freeGuiImage(lButtonIcon);
+    freeGuiImage(rButtonIcon);
     freeGuiText(noDatabasesTxt);
     freeGuiBox(btnBg);
     freeGuiBox(btnBgUsed);
     freeGuiBox(btnBgHover);
 
-    for (size_t i = 0; i < displayedDatabasesCount; i++) {
+    for (size_t i = 0; i < dbCount; i++) {
         freeGuiText(dbBtnTxtNames[i]);
         freeGuiText(dbBtnTxtValues[i]);
         freeGuiButton(dbBtns[i]);
