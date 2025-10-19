@@ -116,7 +116,11 @@ bool createDirR(const char* dirPath)
     char* p = NULL;
     size_t len;
 
+    if (dirPath == NULL || dirPath[0] == '\0')
+        return false;
+
     strncpy(tempPath, dirPath, sizeof(tempPath) - 1);
+    tempPath[sizeof(tempPath) - 1] = '\0';
     len = strlen(tempPath);
 
     // Remove trailing slash if present
@@ -130,6 +134,10 @@ bool createDirR(const char* dirPath)
     else
         p = tempPath;
 
+    // Skip leading slashes to avoid calling mkdir("") on absolute paths
+    while (*p == '/')
+        p++;
+
     // Iterate through the path and create directories as needed
     for (; *p; p++) {
         if (*p != '/')
@@ -137,13 +145,19 @@ bool createDirR(const char* dirPath)
 
         *p = '\0';
 
-        if (!createDir(tempPath))
-            return false;
+        // Avoid attempting to create empty segments (e.g., when path starts with '/')
+        if (tempPath[0] != '\0') {
+            if (!createDir(tempPath))
+                return false;
+        }
 
         *p = '/';
     }
 
-    // Create the final directory
+    // Create the final directory (if not empty)
+    if (tempPath[0] == '\0')
+        return false;
+
     return createDir(tempPath);
 }
 
