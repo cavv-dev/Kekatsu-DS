@@ -175,6 +175,9 @@ GuiImage newGuiImage(const unsigned* bitmap, const u16* pal, size_t width, size_
         pal,
         (u8*)bitmap);
 
+    if (gi->textureId == -1)
+        return NULL;
+
     // Set scale to fit inside resized width and height
     if (resizeWidth || resizeHeight) {
         double scaleFactor = 1.0;
