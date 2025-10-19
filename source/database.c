@@ -14,7 +14,9 @@
 #define LAST_OPENED_DB_PATH APPDATA_DIR "/" LAST_OPENED_DB_FILENAME
 
 #define DATABASE_LIST_FILENAME "databases.txt"
+#define DATABASE_LIST_FILENAME_ALT "databases.txt.txt"
 #define DATABASE_LIST_PATH APPDATA_DIR "/" DATABASE_LIST_FILENAME
+#define DATABASE_LIST_PATH_ALT APPDATA_DIR "/" DATABASE_LIST_FILENAME_ALT
 
 struct Database {
     char* name;
@@ -350,8 +352,12 @@ Database* getDatabaseList(size_t* databasesCount)
     *databasesCount = 0;
 
     FILE* fp = fopen(DATABASE_LIST_PATH, "r");
-    if (!fp)
-        return NULL;
+    if (!fp) {
+        // The user could have set the file name wrong (due to hiding extensions from file explorer) so use the alternative name
+        fp = fopen(DATABASE_LIST_PATH_ALT, "r");
+        if (!fp)
+            return NULL;
+    }
 
     size_t count = 0;
     size_t capacity = 8;
