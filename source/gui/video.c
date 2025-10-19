@@ -3,7 +3,7 @@
 #include <gl2d.h>
 #include <nds.h>
 
-void initSubSprites(void)
+static void initSubSprites(void)
 {
     oamInit(&oamSub, SpriteMapping_Bmp_2D_256, false);
 

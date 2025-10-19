@@ -31,7 +31,7 @@
 #include <unistd.h>
 
 // Current menu
-MenuEnum menu;
+static MenuEnum menu;
 
 // Choose color macro
 #define col(x) colorSchemes[settings.colorScheme][x]
@@ -40,10 +40,10 @@ MenuEnum menu;
 #define tr(x) gettext(x)
 
 // Search parameters
-char searchTitle[128];
-size_t searchPage = 1;
+static char searchTitle[128];
+static size_t searchPage = 1;
 
-Entry selectedEntry;
+static Entry selectedEntry;
 
 #define NAVBAR_BUTTONS_COUNT 4
 
@@ -54,10 +54,11 @@ struct Navbar {
     GuiImage btnIcons[NAVBAR_BUTTONS_COUNT];
     GuiImage btnIconsHover[NAVBAR_BUTTONS_COUNT];
     GuiButton btns[NAVBAR_BUTTONS_COUNT];
-} navbar;
+};
+static struct Navbar navbar;
 
 // Initializes the navbar with buttons and icons
-void initNavbar(void)
+static void initNavbar(void)
 {
     navbar.bg = newGuiBox(SCREEN_WIDTH, 32, col(COLOR_SECONDARY));
     setGuiBoxPos(navbar.bg, 0, 160);
@@ -87,7 +88,7 @@ void initNavbar(void)
 }
 
 // Frees the resources allocated for the navbar
-void freeNavbar(void)
+static void freeNavbar(void)
 {
     freeGuiBox(navbar.bg);
     freeGuiBox(navbar.btnBgHover);
@@ -105,7 +106,7 @@ void freeNavbar(void)
 }
 
 // Switches the current menu and updates the navbar buttons accordingly
-void switchMenu(MenuEnum targetMenu)
+static void switchMenu(MenuEnum targetMenu)
 {
     // Set navbar buttons to original state
     for (size_t i = 0; i < NAVBAR_BUTTONS_COUNT; i++) {
@@ -139,7 +140,7 @@ void switchMenu(MenuEnum targetMenu)
 }
 
 // Switches the menu based on which navbar button has been clicked
-void navbarSwitchMenu(void)
+static void navbarSwitchMenu(void)
 {
     for (size_t i = 0; i < NAVBAR_BUTTONS_COUNT; i++) {
         if (getGuiButtonState(navbar.btns[i]) != GUI_BUTTON_STATE_CLICKED)
@@ -165,7 +166,7 @@ void navbarSwitchMenu(void)
 }
 
 // Adds the navbar elements to the given screen
-void addNavbarToGuiScreen(GuiScreen gs)
+static void addNavbarToGuiScreen(GuiScreen gs)
 {
     addToGuiScreen(gs, navbar.bg, GUI_ELEMENT_TYPE_BOX);
 
@@ -175,7 +176,7 @@ void addNavbarToGuiScreen(GuiScreen gs)
 
 // Displays a keyboard interface to edit the given string
 // Returns true if the changes to the string have been saved, false if ignored
-bool keyboardEdit(char* str, size_t maxLength)
+static bool keyboardEdit(char* str, size_t maxLength)
 {
     char tempStr[maxLength];
     strncpy(tempStr, str, maxLength);
@@ -288,7 +289,7 @@ bool keyboardEdit(char* str, size_t maxLength)
 
 // Displays a prompt window with the given title and message
 // Returns true if the first option is clicked, false if the second option is clicked
-bool windowPrompt(const char* title, const char* message, const char* btn1Label, const char* btn2Label)
+static bool windowPrompt(const char* title, const char* message, const char* btn1Label, const char* btn2Label)
 {
     GuiScreen bottomScreen = newGuiScreen(GUI_SCREEN_LCD_BOTTOM);
 
@@ -400,7 +401,7 @@ bool windowPrompt(const char* title, const char* message, const char* btn1Label,
 }
 
 // Displays a message on the bottom screen in a non-blocking way
-void showMessage(const char* message)
+static void showMessage(const char* message)
 {
     GuiScreen bottomScreen = newGuiScreen(GUI_SCREEN_LCD_BOTTOM);
 
@@ -434,7 +435,7 @@ void showMessage(const char* message)
 }
 
 // Draws a black background on both screens
-void drawBlank(void)
+static void drawBlank(void)
 {
     GuiScreen topScreen = newGuiScreen(GUI_SCREEN_LCD_TOP);
     GuiScreen bottomScreen = newGuiScreen(GUI_SCREEN_LCD_BOTTOM);
@@ -459,7 +460,7 @@ void drawBlank(void)
 
 // Downloads and loads a box art file of a given entry into a new GuiImage element
 // Returns the created GuiImage element
-GuiImage loadBoxart(Entry e)
+static GuiImage loadBoxart(Entry e)
 {
     char boxartFilename[NAME_MAX];
     strncpy(boxartFilename, getEntryBoxartUrl(e), sizeof(boxartFilename) - 1);
@@ -484,11 +485,12 @@ struct DlData {
     GuiButton cancelBtn;
     time_t lastSpeedUpdateTime;
     size_t lastDlnow;
-} dlData;
+};
+static struct DlData dlData;
 
 // curl download progress function
 // Draws the download progress interface
-size_t downloadProgressCallback(void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
+static size_t downloadProgressCallback(void* clientp, curl_off_t dltotal, curl_off_t dlnow, curl_off_t ultotal, curl_off_t ulnow)
 {
     guiLoop();
 
@@ -542,7 +544,7 @@ size_t downloadProgressCallback(void* clientp, curl_off_t dltotal, curl_off_t dl
 
 // Sets up the download progress interface and starts the download
 // Returns the download status
-DownloadStatus downloadGui(const char* path, const char* url, const char* fileName)
+static DownloadStatus downloadGui(const char* path, const char* url, const char* fileName)
 {
     GuiScreen bottomScreen = newGuiScreen(GUI_SCREEN_LCD_BOTTOM);
 
@@ -614,7 +616,7 @@ DownloadStatus downloadGui(const char* path, const char* url, const char* fileNa
 }
 
 // Handles the download of the given entry
-void downloadEntry(Entry e)
+static void downloadEntry(Entry e)
 {
     char downloadDirPath[PATH_MAX];
     char downloadFilePath[PATH_MAX];
@@ -754,7 +756,7 @@ void downloadEntry(Entry e)
 #define UPDATE_FILENAME "Kekatsu.nds"
 
 // Handles the download of the update file
-void downloadUpdate(void)
+static void downloadUpdate(void)
 {
     char workDir[PATH_MAX];
     getcwd(workDir, sizeof(workDir));
@@ -780,7 +782,7 @@ void downloadUpdate(void)
 }
 
 // Handles the update check and download
-void handleUpdateCheck(void)
+static void handleUpdateCheck(void)
 {
     showMessage(tr("Checking for updates..."));
 
@@ -806,7 +808,7 @@ void handleUpdateCheck(void)
 
 // Handles the loading of the given database
 // Returns true if the database has been loaded, false if there was an error
-bool loadDatabase(Database d)
+static bool loadDatabase(Database d)
 {
     char tempMessage[128];
     snprintf(tempMessage, sizeof(tempMessage), "%s (%s)", tr("Loading database..."), getDatabaseName(d));
@@ -857,7 +859,7 @@ bool loadDatabase(Database d)
 }
 
 // Loads the last opened database
-void loadLastOpenedDb(void)
+static void loadLastOpenedDb(void)
 {
     Database lastDb = getLastOpenedDatabase();
     if (!lastDb)
@@ -869,7 +871,7 @@ void loadLastOpenedDb(void)
 
 // Browse menu
 // Displays the search options
-void browseMenu(void)
+static void browseMenu(void)
 {
     menu = MENU_NONE;
 
@@ -973,7 +975,7 @@ void browseMenu(void)
 
 // Results menu
 // Starts the search in the database with the set parameters and shows the results
-void resultsMenu(void)
+static void resultsMenu(void)
 {
     menu = MENU_NONE;
 
@@ -1221,7 +1223,7 @@ void resultsMenu(void)
 
 // Entry menu
 // Displays the information of the selected entry
-void entryMenu(void)
+static void entryMenu(void)
 {
     menu = MENU_NONE;
 
@@ -1375,7 +1377,7 @@ void entryMenu(void)
 
 // Download menu
 // Starts the download of the selected entry
-void downloadMenu(void)
+static void downloadMenu(void)
 {
     downloadEntry(selectedEntry);
 
@@ -1386,7 +1388,7 @@ void downloadMenu(void)
 
 // Databases menu
 // Displays the list of available databases
-void databasesMenu(void)
+static void databasesMenu(void)
 {
     menu = MENU_NONE;
 
@@ -1511,7 +1513,7 @@ void databasesMenu(void)
 
 // Settings menu
 // Displays the app settings
-void settingsMenu(void)
+static void settingsMenu(void)
 {
     menu = MENU_NONE;
 
@@ -1693,7 +1695,7 @@ void settingsMenu(void)
 
 // Info menu
 // Displays information about Kekatsu
-void infoMenu(void)
+static void infoMenu(void)
 {
     menu = MENU_NONE;
 

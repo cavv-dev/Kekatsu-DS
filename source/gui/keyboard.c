@@ -13,7 +13,7 @@ struct GuiKeyboard {
 
 #define KEYS_COUNT 43
 
-void setKeys(GuiKeyboard gk)
+static void setKeys(GuiKeyboard gk)
 {
     const char* chars;
 
@@ -34,7 +34,7 @@ void setKeys(GuiKeyboard gk)
     gk->keys[31].extraKey = GUI_KEYBOARD_EXTRA_KEY_SHIFT;
 }
 
-void setKeysPos(GuiKeyboard gk)
+static void setKeysPos(GuiKeyboard gk)
 {
     // First row
     for (size_t i = 0; i < 11; i++)
@@ -56,7 +56,7 @@ void setKeysPos(GuiKeyboard gk)
     setGuiButtonPos(gk->keys[41].btn, gk->posX + 70, gk->posY + 23 * 4);
 }
 
-void setKeysShift(GuiKeyboard gk)
+static void setKeysShift(GuiKeyboard gk)
 {
     gk->shiftPressed = (gk->shiftPressed ? false : true);
     setKeys(gk);

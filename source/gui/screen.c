@@ -26,10 +26,10 @@ struct GuiScreen {
     struct ElementList* elements;
 };
 
-GuiScreen activeTopScreen = NULL;
-GuiScreen activeBottomScreen = NULL;
+static GuiScreen activeTopScreen = NULL;
+static GuiScreen activeBottomScreen = NULL;
 
-GuiScreenLcd targetLcd = GUI_SCREEN_LCD_TOP;
+static GuiScreenLcd targetLcd = GUI_SCREEN_LCD_TOP;
 
 GuiScreen newGuiScreen(GuiScreenLcd lcd)
 {
@@ -161,7 +161,7 @@ GuiScreen getActiveBottomScreen(void)
     return activeBottomScreen;
 }
 
-void handleScreensDpadNavigate(void)
+static void handleScreensDpadNavigate(void)
 {
     if ((!activeTopScreen || !activeTopScreen->dpadNavigate) && (!activeBottomScreen || !activeBottomScreen->dpadNavigate))
         return;

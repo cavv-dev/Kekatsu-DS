@@ -19,7 +19,7 @@ NetworkingInitStatus initNetworking(void)
     return NETWORKING_INIT_SUCCESS;
 }
 
-bool stopDownloadSignal = false;
+static bool stopDownloadSignal = false;
 
 struct WriteData {
     FILE* fp;
@@ -27,7 +27,7 @@ struct WriteData {
     size_t bufferPos;
 };
 
-size_t writeDataCallback(void* ptr, size_t size, size_t nmemb, void* userdata)
+static size_t writeDataCallback(void* ptr, size_t size, size_t nmemb, void* userdata)
 {
     struct WriteData* writeData = (struct WriteData*)userdata;
     if (stopDownloadSignal)
@@ -125,7 +125,7 @@ struct MemoryWriteData {
     size_t currentPos;
 };
 
-size_t memoryWriteCallback(void* ptr, size_t size, size_t nmemb, void* userdata)
+static size_t memoryWriteCallback(void* ptr, size_t size, size_t nmemb, void* userdata)
 {
     struct MemoryWriteData* writeData = (struct MemoryWriteData*)userdata;
     size_t total_size = size * nmemb;

@@ -147,7 +147,7 @@ bool createDirR(const char* dirPath)
     return createDir(tempPath);
 }
 
-void getPathDir(const char* path, char* dir)
+static void getPathDir(const char* path, char* dir)
 {
     const char* lastSlash = strrchr(path, '/');
 

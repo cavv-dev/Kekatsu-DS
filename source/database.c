@@ -82,7 +82,7 @@ bool getDatabaseIsInited(Database d)
     return d->isInited;
 }
 
-char** parseLine(char* line, char delimiter, size_t* fieldsCount)
+static char** parseLine(char* line, char delimiter, size_t* fieldsCount)
 {
     if (line[0] == '\0') {
         *fieldsCount = 0;
@@ -141,7 +141,7 @@ Database getLastOpenedDatabase(void)
     return newDatabase(name, value);
 }
 
-void saveLastOpenedDatabase(Database d)
+static void saveLastOpenedDatabase(Database d)
 {
     FILE* fp = fopen(LAST_OPENED_DB_PATH, "w");
     if (!fp)
@@ -256,7 +256,7 @@ DatabaseInitStatus initDatabase(Database d)
     return (usingCachedDb ? DATABASE_INIT_SUCCESS_CACHE : DATABASE_INIT_SUCCESS);
 }
 
-void alignDatabase(Database d)
+static void alignDatabase(Database d)
 {
     fseek(d->fp, 0, SEEK_SET);
 

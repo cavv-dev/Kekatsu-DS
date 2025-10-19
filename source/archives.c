@@ -20,7 +20,7 @@ bool fileIsZip(const char* filePath)
     return (bytesRead == 4 && buffer[0] == 0x50 && buffer[1] == 0x4b && buffer[2] == 0x03 && buffer[3] == 0x04);
 }
 
-ExtractStatus extractFile(unzFile zipFile, const char* outFilePath)
+static ExtractStatus extractFile(unzFile zipFile, const char* outFilePath)
 {
     char zipFilePath[PATH_MAX];
     if (unzGetCurrentFileInfo(zipFile, NULL, zipFilePath, sizeof(zipFilePath), NULL, 0, NULL, 0) != UNZ_OK)

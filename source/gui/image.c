@@ -16,7 +16,7 @@ struct GuiImage {
     int colorTintPalId;
 };
 
-void bitmapToRGB5A1(u8* bitmap, size_t width, size_t height, GuiImageTextureType textureType)
+static void bitmapToRGB5A1(u8* bitmap, size_t width, size_t height, GuiImageTextureType textureType)
 {
     size_t pixelCount = width * height;
     u16* rgb5a1Bitmap = (u16*)bitmap;
@@ -37,7 +37,7 @@ void bitmapToRGB5A1(u8* bitmap, size_t width, size_t height, GuiImageTextureType
     }
 }
 
-bool pngFileToBitmap(const char* filePath, u8** bitmap, size_t* width, size_t* height, GuiImageTextureType* textureType)
+static bool pngFileToBitmap(const char* filePath, u8** bitmap, size_t* width, size_t* height, GuiImageTextureType* textureType)
 {
     FILE* fp = fopen(filePath, "rb");
     if (!fp)

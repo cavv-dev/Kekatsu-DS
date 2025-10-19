@@ -9,13 +9,13 @@
 #include <gl2d.h>
 #include <stdio.h>
 
-glImage fontBig[FONTBIG_NUM_IMAGES];
-glImage fontMedium[FONTBIG_NUM_IMAGES];
-glImage fontSmall[FONTSMALL_NUM_IMAGES];
+static glImage fontBig[FONTBIG_NUM_IMAGES];
+static glImage fontMedium[FONTBIG_NUM_IMAGES];
+static glImage fontSmall[FONTSMALL_NUM_IMAGES];
 
-int fontBigTextureId;
-int fontMediumTextureId;
-int fontSmallTextureId;
+static int fontBigTextureId;
+static int fontMediumTextureId;
+static int fontSmallTextureId;
 
 struct GuiText {
     size_t width;
@@ -114,7 +114,7 @@ void freeGuiText(GuiText gt)
     free(gt);
 }
 
-void updateWH(GuiText gt)
+static void updateWH(GuiText gt)
 {
     size_t x = 0;
     size_t y = 0;
