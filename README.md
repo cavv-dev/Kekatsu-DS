@@ -96,18 +96,28 @@ test-app2,gba,NTSC-U,1.1,Author2,https://example.com/test-app2.zip,test-app2.zip
 
 ## Building
 ### Requirements
-- devkitARM toolchain (`nds-dev` package group) by [devkitPro](https://github.com/devkitPro)
-- [curl](https://github.com/ds-sloth/pacman-packages/tree/nds-curl-mbedtls/nds/curl) and [mbedtls](https://github.com/ds-sloth/pacman-packages/tree/nds-curl-mbedtls/nds/mbedtls) by [ds-sloth](https://github.com/ds-sloth)
-- nds-zlib, nds-libpng from devkitPro pacman repository
+- [BlocksDS SDK](https://github.com/blocksds/sdk)
+- From the BlocksDS pacman repository:
+    - `toolchain-gcc-arm-none-eabi-zlib`
+    - `toolchain-gcc-arm-none-eabi-libpng16`
+    - `blocksds-mbedtls`
+    - `blocksds-libcurl`
 
+Change directory
 ```sh
 git clone https://github.com/cavv-dev/Kekatsu-DS.git
 cd Kekatsu-DS
-make release
+```
+Build
+```sh
+python3 build.py
+```
+Build for release
+```sh
+python3 build.py release
 ```
 
 ## Credits
 - [Cavv](https://github.com/cavv-dev): Main developer
-- [devkitPro](https://github.com/devkitPro): devkitARM and relative libraries
-- [ds-sloth](https://github.com/ds-sloth): curl and mbedtls libraries
+- [BlocksDS](https://github.com/blocksds): SDK and relative libraries
 - [Flaticon](https://www.flaticon.com/): Icons

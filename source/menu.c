@@ -1,8 +1,8 @@
 #include "menu.h"
 
 #include "archives.h"
-#include "brickColor1.h"
-#include "brickColor2.h"
+#include "brickColor1_png.h"
+#include "brickColor2_png.h"
 #include "colors.h"
 #include "config.h"
 #include "gettext.h"
@@ -15,14 +15,14 @@
 #include "gui/screen.h"
 #include "gui/text.h"
 #include "gui/video.h"
-#include "lButton.h"
+#include "lButton_png.h"
 #include "main.h"
-#include "navbarBrowseIcon.h"
-#include "navbarDatabasesIcon.h"
-#include "navbarInfoIcon.h"
-#include "navbarSettingsIcon.h"
+#include "navbarBrowseIcon_png.h"
+#include "navbarDatabasesIcon_png.h"
+#include "navbarInfoIcon_png.h"
+#include "navbarSettingsIcon_png.h"
 #include "networking.h"
-#include "rButton.h"
+#include "rButton_png.h"
 #include "settings.h"
 #include "utils/filesystem.h"
 #include "utils/math.h"
@@ -65,15 +65,15 @@ void initNavbar(void)
     navbar.btnBg = newGuiBox(64, 32, col(COLOR_SECONDARY));
     navbar.btnBgHover = newGuiBox(64, 32, col(COLOR_PRIMARY));
 
-    navbar.btnIcons[0] = newGuiImage(navbarBrowseIconBitmap, navbarBrowseIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    navbar.btnIcons[1] = newGuiImage(navbarDatabasesIconBitmap, navbarDatabasesIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    navbar.btnIcons[2] = newGuiImage(navbarSettingsIconBitmap, navbarSettingsIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    navbar.btnIcons[3] = newGuiImage(navbarInfoIconBitmap, navbarInfoIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIcons[0] = newGuiImage(navbarBrowseIcon_pngBitmap, navbarBrowseIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIcons[1] = newGuiImage(navbarDatabasesIcon_pngBitmap, navbarDatabasesIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIcons[2] = newGuiImage(navbarSettingsIcon_pngBitmap, navbarSettingsIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIcons[3] = newGuiImage(navbarInfoIcon_pngBitmap, navbarInfoIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
 
-    navbar.btnIconsHover[0] = newGuiImage(navbarBrowseIconBitmap, navbarBrowseIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    navbar.btnIconsHover[1] = newGuiImage(navbarDatabasesIconBitmap, navbarDatabasesIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    navbar.btnIconsHover[2] = newGuiImage(navbarSettingsIconBitmap, navbarSettingsIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    navbar.btnIconsHover[3] = newGuiImage(navbarInfoIconBitmap, navbarInfoIconPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIconsHover[0] = newGuiImage(navbarBrowseIcon_pngBitmap, navbarBrowseIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIconsHover[1] = newGuiImage(navbarDatabasesIcon_pngBitmap, navbarDatabasesIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIconsHover[2] = newGuiImage(navbarSettingsIcon_pngBitmap, navbarSettingsIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    navbar.btnIconsHover[3] = newGuiImage(navbarInfoIcon_pngBitmap, navbarInfoIcon_pngPal, 20, 20, 32, 32, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
 
     for (size_t i = 0; i < NAVBAR_BUTTONS_COUNT; i++) {
         setGuiImageColorTint(navbar.btnIcons[i], col(COLOR_PRIMARY));
@@ -173,13 +173,6 @@ void addNavbarToGuiScreen(GuiScreen gs)
         addToGuiScreen(gs, navbar.btns[i], GUI_ELEMENT_TYPE_BUTTON);
 }
 
-// Handles the reset action by the user such as power button being pressed
-void handleReset(void)
-{
-    if(pmShouldReset())
-        menu = MENU_EXIT;
-}
-
 // Displays a keyboard interface to edit the given string
 // Returns true if the changes to the string have been saved, false if ignored
 bool keyboardEdit(char* str, size_t maxLength)
@@ -247,7 +240,7 @@ bool keyboardEdit(char* str, size_t maxLength)
     setActiveScreens(topScreen, bottomScreen);
 
     bool save = false;
-    while (pmMainLoop()) {
+    while (1) {
         guiLoop();
         drawScreens();
 
@@ -271,8 +264,6 @@ bool keyboardEdit(char* str, size_t maxLength)
             save = false;
             break;
         }
-
-        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -373,7 +364,7 @@ bool windowPrompt(const char* title, const char* message, const char* btn1Label,
     setActiveScreens(NULL, bottomScreen);
 
     bool ret = true;
-    while (pmMainLoop()) {
+    while (1) {
         guiLoop();
         drawScreens();
 
@@ -384,8 +375,6 @@ bool windowPrompt(const char* title, const char* message, const char* btn1Label,
             ret = false;
             break;
         }
-
-        handleReset();
     }
 
     freeGuiScreen(bottomScreen);
@@ -889,8 +878,8 @@ void browseMenu(void)
 
     GuiBox bg = newGuiBox(SCREEN_WIDTH, SCREEN_HEIGHT, col(COLOR_BG));
 
-    GuiImage brickColor1 = newGuiImage(brickColor1Bitmap, brickColor1Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    GuiImage brickColor2 = newGuiImage(brickColor2Bitmap, brickColor2Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor1 = newGuiImage(brickColor1_pngBitmap, brickColor1_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor2 = newGuiImage(brickColor2_pngBitmap, brickColor2_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(brickColor1, col(COLOR_PRIMARY));
     setGuiImageColorTint(brickColor2, col(COLOR_SECONDARY));
     setGuiImagePos(brickColor1, 96, 72);
@@ -945,7 +934,7 @@ void browseMenu(void)
     addNavbarToGuiScreen(bottomScreen);
 
     setActiveScreens(topScreen, bottomScreen);
-    while (pmMainLoop() && menu == MENU_NONE) {
+    while (menu == MENU_NONE) {
         guiLoop();
         drawScreens();
 
@@ -962,7 +951,6 @@ void browseMenu(void)
         }
 
         navbarSwitchMenu();
-        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1002,8 +990,8 @@ void resultsMenu(void)
 
     GuiBox bg = newGuiBox(SCREEN_WIDTH, SCREEN_HEIGHT, col(COLOR_BG));
 
-    GuiImage brickColor1 = newGuiImage(brickColor1Bitmap, brickColor1Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    GuiImage brickColor2 = newGuiImage(brickColor2Bitmap, brickColor2Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor1 = newGuiImage(brickColor1_pngBitmap, brickColor1_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor2 = newGuiImage(brickColor2_pngBitmap, brickColor2_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(brickColor1, col(COLOR_PRIMARY));
     setGuiImageColorTint(brickColor2, col(COLOR_SECONDARY));
     setGuiImagePos(brickColor1, 96, 72);
@@ -1022,8 +1010,8 @@ void resultsMenu(void)
     setGuiTextAlignment(prevPageTxt, GUI_TEXT_H_ALIGN_LEFT, GUI_TEXT_V_ALIGN_MIDDLE);
     setGuiTextAlignment(nextPageTxt, GUI_TEXT_H_ALIGN_RIGHT, GUI_TEXT_V_ALIGN_MIDDLE);
 
-    GuiImage lButtonIcon = newGuiImage(lButtonBitmap, lButtonPal, 16, 10, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    GuiImage rButtonIcon = newGuiImage(rButtonBitmap, rButtonPal, 16, 10, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage lButtonIcon = newGuiImage(lButton_pngBitmap, lButton_pngPal, 16, 10, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage rButtonIcon = newGuiImage(rButton_pngBitmap, rButton_pngPal, 16, 10, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImagePos(lButtonIcon, 6, 174);
     setGuiImagePos(rButtonIcon, 234, 174);
 
@@ -1102,7 +1090,7 @@ void resultsMenu(void)
         setGuiButtonState(resultsBtn[0], GUI_BUTTON_STATE_SELECTED);
 
     setActiveScreens(topScreen, bottomScreen);
-    while (pmMainLoop() && menu == MENU_NONE) {
+    while (menu == MENU_NONE) {
         guiLoop();
 
         if (resultsCount > 0) {
@@ -1207,7 +1195,6 @@ void resultsMenu(void)
         drawScreens();
 
         navbarSwitchMenu();
-        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1323,8 +1310,8 @@ void entryMenu(void)
 
         addToGuiScreen(topScreen, boxart, GUI_ELEMENT_TYPE_IMAGE);
     } else {
-        brickColor1 = newGuiImage(brickColor1Bitmap, brickColor1Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-        brickColor2 = newGuiImage(brickColor2Bitmap, brickColor2Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+        brickColor1 = newGuiImage(brickColor1_pngBitmap, brickColor1_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+        brickColor2 = newGuiImage(brickColor2_pngBitmap, brickColor2_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
         setGuiImageColorTint(brickColor1, col(COLOR_PRIMARY));
         setGuiImageColorTint(brickColor2, col(COLOR_SECONDARY));
         setGuiImagePos(brickColor1, 96, 72);
@@ -1350,7 +1337,7 @@ void entryMenu(void)
 
     setActiveScreens(topScreen, bottomScreen);
 
-    while (pmMainLoop() && menu == MENU_NONE) {
+    while (menu == MENU_NONE) {
         guiLoop();
         drawScreens();
 
@@ -1358,7 +1345,6 @@ void entryMenu(void)
             switchMenu(MENU_DOWNLOAD);
 
         navbarSwitchMenu();
-        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1409,8 +1395,8 @@ void databasesMenu(void)
 
     GuiBox bg = newGuiBox(SCREEN_WIDTH, SCREEN_HEIGHT, col(COLOR_BG));
 
-    GuiImage brickColor1 = newGuiImage(brickColor1Bitmap, brickColor1Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    GuiImage brickColor2 = newGuiImage(brickColor2Bitmap, brickColor2Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor1 = newGuiImage(brickColor1_pngBitmap, brickColor1_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor2 = newGuiImage(brickColor2_pngBitmap, brickColor2_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(brickColor1, col(COLOR_PRIMARY));
     setGuiImageColorTint(brickColor2, col(COLOR_SECONDARY));
     setGuiImagePos(brickColor1, 96, 72);
@@ -1483,7 +1469,7 @@ void databasesMenu(void)
     addNavbarToGuiScreen(bottomScreen);
 
     setActiveScreens(topScreen, bottomScreen);
-    while (pmMainLoop() && menu == MENU_NONE) {
+    while (menu == MENU_NONE) {
         guiLoop();
         drawScreens();
 
@@ -1498,7 +1484,6 @@ void databasesMenu(void)
         }
 
         navbarSwitchMenu();
-        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1535,8 +1520,8 @@ void settingsMenu(void)
 
     GuiBox bg = newGuiBox(SCREEN_WIDTH, SCREEN_HEIGHT, col(COLOR_BG));
 
-    GuiImage brickColor1 = newGuiImage(brickColor1Bitmap, brickColor1Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    GuiImage brickColor2 = newGuiImage(brickColor2Bitmap, brickColor2Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor1 = newGuiImage(brickColor1_pngBitmap, brickColor1_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor2 = newGuiImage(brickColor2_pngBitmap, brickColor2_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(brickColor1, col(COLOR_PRIMARY));
     setGuiImageColorTint(brickColor2, col(COLOR_SECONDARY));
     setGuiImagePos(brickColor1, 96, 72);
@@ -1609,7 +1594,7 @@ void settingsMenu(void)
     addNavbarToGuiScreen(bottomScreen);
 
     setActiveScreens(topScreen, bottomScreen);
-    while (pmMainLoop() && menu == MENU_NONE) {
+    while (menu == MENU_NONE) {
         guiLoop();
         drawScreens();
 
@@ -1688,7 +1673,6 @@ void settingsMenu(void)
         }
 
         navbarSwitchMenu();
-        handleReset();
     }
 
     freeGuiScreen(topScreen);
@@ -1718,8 +1702,8 @@ void infoMenu(void)
 
     GuiBox bg = newGuiBox(SCREEN_WIDTH, SCREEN_HEIGHT, col(COLOR_BG));
 
-    GuiImage brickColor1 = newGuiImage(brickColor1Bitmap, brickColor1Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
-    GuiImage brickColor2 = newGuiImage(brickColor2Bitmap, brickColor2Pal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor1 = newGuiImage(brickColor1_pngBitmap, brickColor1_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    GuiImage brickColor2 = newGuiImage(brickColor2_pngBitmap, brickColor2_pngPal, 64, 48, 64, 64, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(brickColor1, col(COLOR_PRIMARY));
     setGuiImageColorTint(brickColor2, col(COLOR_SECONDARY));
     setGuiImagePos(brickColor1, 96, 72);
@@ -1777,7 +1761,7 @@ void infoMenu(void)
     addNavbarToGuiScreen(bottomScreen);
 
     setActiveScreens(topScreen, bottomScreen);
-    while (pmMainLoop() && menu == MENU_NONE) {
+    while (menu == MENU_NONE) {
         guiLoop();
         drawScreens();
 
@@ -1787,7 +1771,6 @@ void infoMenu(void)
         }
 
         navbarSwitchMenu();
-        handleReset();
     }
 
     freeGuiScreen(topScreen);

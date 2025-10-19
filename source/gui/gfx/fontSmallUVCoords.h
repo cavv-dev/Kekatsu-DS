@@ -5,7 +5,7 @@
 #define FONTSMALL_BITMAP_HEIGHT 256
 #define FONTSMALL_NUM_IMAGES 256
 
-const unsigned int fontSmallTexCoords[] = {
+const uint16_t fontSmallTexCoords[] = {
     118, 13, 6, 12, // ?
     118, 13, 6, 12, // ?
     118, 13, 6, 12, // ?

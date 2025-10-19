@@ -11,7 +11,7 @@
 
 NetworkingInitStatus initNetworking(void)
 {
-    if (!Wifi_InitDefault(WFC_CONNECT))
+    if (!Wifi_InitDefault(WFC_CONNECT | WIFI_ATTEMPT_DSI_MODE))
         return NETWORKING_INIT_ERR_WIFI_CONNECT;
 
     curl_global_init(CURL_GLOBAL_DEFAULT);

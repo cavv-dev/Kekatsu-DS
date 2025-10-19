@@ -5,7 +5,7 @@
 #include "en_lang.h"
 #include "it_lang.h"
 #include "nl_lang.h"
-#include <calico/types.h>
+#include <nds/ndstypes.h>
 #include <stdlib.h>
 #include <string.h>
 

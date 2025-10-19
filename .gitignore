@@ -5,3 +5,6 @@ release/
 Kekatsu-DS.zip
 version.txt
 .vscode/
+/build.ninja
+/.ninja_deps
+/.ninja_log

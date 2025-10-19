@@ -1,9 +1,10 @@
 #include "archives.h"
 
+#include "minizip/unzip.h"
 #include "utils/filesystem.h"
 #include "utils/strings.h"
-#include <calico/types.h>
-#include <minizip/unzip.h>
+#include <nds/ndstypes.h>
+#include <stdio.h>
 #include <string.h>
 
 bool fileIsZip(const char* filePath)

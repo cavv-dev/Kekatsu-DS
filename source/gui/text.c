@@ -1,8 +1,8 @@
 #include "text.h"
 
-#include "fontBig_0.h"
-#include "fontMedium_0.h"
-#include "fontSmall_0.h"
+#include "fontBig_0_png.h"
+#include "fontMedium_0_png.h"
+#include "fontSmall_0_png.h"
 #include "gfx/fontBigUVCoords.h"
 #include "gfx/fontMediumUVCoords.h"
 #include "gfx/fontSmallUVCoords.h"
@@ -45,8 +45,8 @@ void initGuiFont(void)
         TEXTURE_SIZE_256,
         TEXGEN_OFF | GL_TEXTURE_COLOR0_TRANSPARENT,
         256,
-        fontBig_0Pal,
-        (u8*)fontBig_0Bitmap);
+        fontBig_0_pngPal,
+        (u8*)fontBig_0_pngBitmap);
 
     fontMediumTextureId = glLoadSpriteSet(
         fontMedium,
@@ -57,8 +57,8 @@ void initGuiFont(void)
         TEXTURE_SIZE_256,
         TEXGEN_OFF | GL_TEXTURE_COLOR0_TRANSPARENT,
         256,
-        fontMedium_0Pal,
-        (u8*)fontMedium_0Bitmap);
+        fontMedium_0_pngPal,
+        (u8*)fontMedium_0_pngBitmap);
 
     fontSmallTextureId = glLoadSpriteSet(
         fontSmall,
@@ -69,8 +69,8 @@ void initGuiFont(void)
         TEXTURE_SIZE_256,
         TEXGEN_OFF | GL_TEXTURE_COLOR0_TRANSPARENT,
         256,
-        fontSmall_0Pal,
-        (u8*)fontSmall_0Bitmap);
+        fontSmall_0_pngPal,
+        (u8*)fontSmall_0_pngBitmap);
 }
 
 GuiText newGuiText(const char* text, GuiTextSize size, u16 color)

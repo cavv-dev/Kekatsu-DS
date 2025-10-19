@@ -1,5 +1,6 @@
 #pragma once
-#include <calico/types.h>
+#include <nds/ndstypes.h>
+#include <stddef.h>
 
 void humanizeSize(char* sizeStr, size_t bufferSize, u64 sizeInBytes);
 void lowerStr(char*);

@@ -2,6 +2,7 @@
 
 #include <dirent.h>
 #include <errno.h>
+#include <limits.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -98,10 +99,15 @@ bool renamePath(const char* oldPath, const char* newPath)
 
 bool createDir(const char* dirPath)
 {
-    if (mkdir(dirPath, 0755) == 0 || errno == EEXIST)
+    if (mkdir(dirPath, 0755) == 0)
         return true;
-    else
-        return false;
+
+    if (errno == EEXIST) {
+        if (dirExists(dirPath))
+            return true;
+    }
+
+    return false;
 }
 
 bool createDirR(const char* dirPath)

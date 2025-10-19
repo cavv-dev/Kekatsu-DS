@@ -17,7 +17,7 @@ void initSubSprites(void)
         }
     }
 
-    swiWaitForVBlank();
+    cothread_yield_irq(IRQ_VBLANK);
     oamUpdate(&oamSub);
 }
 
@@ -39,5 +39,5 @@ void initGuiVideo(void)
 void guiLoop(void)
 {
     glFlush(0);
-    swiWaitForVBlank();
+    cothread_yield_irq(IRQ_VBLANK);
 }

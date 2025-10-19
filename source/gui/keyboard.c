@@ -1,7 +1,7 @@
 #include "keyboard.h"
 
-#include "backspaceKey.h"
-#include "shiftKey.h"
+#include "backspaceKey_png.h"
+#include "shiftKey_png.h"
 #include <stdlib.h>
 
 struct GuiKeyboard {
@@ -92,12 +92,12 @@ GuiKeyboard newGuiKeyboard(u16 textColor, u16 hoverColor)
     setGuiButtonWidth(gk->keys[41].btn, 115);
 
     // Backspace
-    gk->keys[10].icon = newGuiImage(backspaceKeyBitmap, backspaceKeyPal, 15, 11, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    gk->keys[10].icon = newGuiImage(backspaceKey_pngBitmap, backspaceKey_pngPal, 15, 11, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(gk->keys[10].icon, textColor);
     setGuiButtonIcon(gk->keys[10].btn, gk->keys[10].icon, gk->keys[10].icon);
 
     // Shift
-    gk->keys[31].icon = newGuiImage(shiftKeyBitmap, shiftKeyPal, 11, 13, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
+    gk->keys[31].icon = newGuiImage(shiftKey_pngBitmap, shiftKey_pngPal, 11, 13, 16, 16, 0, 0, GUI_IMAGE_TEXTURE_TYPE_RGB256);
     setGuiImageColorTint(gk->keys[31].icon, textColor);
     setGuiButtonIcon(gk->keys[31].btn, gk->keys[31].icon, gk->keys[31].icon);
 

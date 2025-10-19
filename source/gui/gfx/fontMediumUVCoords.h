@@ -5,7 +5,7 @@
 #define FONTMEDIUM_BITMAP_HEIGHT 256
 #define FONTMEDIUM_NUM_IMAGES 256
 
-const unsigned int fontMediumTexCoords[] = {
+const uint16_t fontMediumTexCoords[] = {
     40, 68, 7, 16, // ?
     40, 68, 7, 16, // ?
     40, 68, 7, 16, // ?

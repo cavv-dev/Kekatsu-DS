@@ -1,5 +1,7 @@
 #pragma once
-#include <calico/types.h>
+#include <nds/ndstypes.h>
+#include <stdbool.h>
+#include <stddef.h>
 
 typedef struct GuiText* GuiText;
 

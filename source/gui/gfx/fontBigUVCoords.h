@@ -5,7 +5,7 @@
 #define FONTBIG_BITMAP_HEIGHT 256
 #define FONTBIG_NUM_IMAGES 256
 
-const unsigned int fontBigTexCoords[] = {
+const uint16_t fontBigTexCoords[] = {
     210, 84, 9, 20, // ?
     210, 84, 9, 20, // ?
     210, 84, 9, 20, // ?

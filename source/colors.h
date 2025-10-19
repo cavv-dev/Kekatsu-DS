@@ -1,5 +1,5 @@
 #pragma once
-#include <calico/types.h>
+#include <nds/ndstypes.h>
 
 typedef enum {
     COLOR_SCHEME_1,
