@@ -1,7 +1,7 @@
 #pragma once
 
 #define APP_NAME "Kekatsu"
-#define APP_VERSION "1.1.0"
+#define APP_VERSION "1.2.0"
 #define APPDATA_DIR "/" APP_NAME
 #define CACHE_DIR APPDATA_DIR "/cache" 
 
