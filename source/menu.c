@@ -480,11 +480,8 @@ struct DlData {
     GuiText fileNameTxt;
     GuiProgressbar progressBar;
     GuiText percentTxt;
-    GuiText speedTxt;
     GuiText progressTxt;
     GuiButton cancelBtn;
-    time_t lastSpeedUpdateTime;
-    size_t lastDlnow;
 };
 static struct DlData dlData;
 
@@ -516,21 +513,6 @@ static size_t downloadProgressCallback(void* clientp, curl_off_t dltotal, curl_o
     setGuiProgressbarPercent(dlData.progressBar, percent);
     setGuiTextText(dlData.percentTxt, percentText);
     setGuiTextText(dlData.progressTxt, progressText);
-
-    time_t currentTime = time(NULL);
-
-    // Update speed if 1 second elapsed
-    if ((currentTime - dlData.lastSpeedUpdateTime >= 1)) {
-        char humanSizeSpeed[16];
-        humanizeSize(humanSizeSpeed, sizeof(humanSizeSpeed), dlnow - dlData.lastDlnow);
-
-        char speedText[32];
-        snprintf(speedText, sizeof(speedText), "%s/s", humanSizeSpeed);
-
-        setGuiTextText(dlData.speedTxt, speedText);
-        dlData.lastSpeedUpdateTime = currentTime;
-        dlData.lastDlnow = dlnow;
-    }
 
     drawScreens();
 
@@ -567,12 +549,8 @@ static DownloadStatus downloadGui(const char* path, const char* url, const char*
     setGuiTextPos(dlData.percentTxt, 128, 73);
     setGuiTextAlignment(dlData.percentTxt, GUI_TEXT_H_ALIGN_CENTER, GUI_TEXT_V_ALIGN_MIDDLE);
 
-    dlData.speedTxt = newGuiText("", GUI_TEXT_SIZE_MEDIUM, col(COLOR_TEXT_2));
-    setGuiTextPos(dlData.speedTxt, 14, 92);
-
     dlData.progressTxt = newGuiText("", GUI_TEXT_SIZE_MEDIUM, col(COLOR_TEXT_2));
-    setGuiTextPos(dlData.progressTxt, 242, 92);
-    setGuiTextAlignment(dlData.progressTxt, GUI_TEXT_H_ALIGN_RIGHT, GUI_TEXT_V_ALIGN_TOP);
+    setGuiTextPos(dlData.progressTxt, 14, 92);
 
     GuiBox cancelBtnBg = newGuiBox(90, 34, col(COLOR_BG_2));
     setGuiBoxBorder(cancelBtnBg, 2, col(COLOR_PRIMARY));
@@ -589,14 +567,11 @@ static DownloadStatus downloadGui(const char* path, const char* url, const char*
     addToGuiScreen(bottomScreen, progressBarBg, GUI_ELEMENT_TYPE_BOX);
     addToGuiScreen(bottomScreen, dlData.progressBar, GUI_ELEMENT_TYPE_PROGRESSBAR);
     addToGuiScreen(bottomScreen, dlData.percentTxt, GUI_ELEMENT_TYPE_TEXT);
-    addToGuiScreen(bottomScreen, dlData.speedTxt, GUI_ELEMENT_TYPE_TEXT);
     addToGuiScreen(bottomScreen, dlData.progressTxt, GUI_ELEMENT_TYPE_TEXT);
     addToGuiScreen(bottomScreen, dlData.cancelBtn, GUI_ELEMENT_TYPE_BUTTON);
 
     setActiveScreens(NULL, bottomScreen);
 
-    dlData.lastSpeedUpdateTime = 0;
-    dlData.lastDlnow = 0;
     DownloadStatus dlStatus = downloadFile(path, url, downloadProgressCallback);
 
     freeGuiScreen(bottomScreen);
@@ -605,7 +580,6 @@ static DownloadStatus downloadGui(const char* path, const char* url, const char*
     freeGuiBox(progressBarBg);
     freeGuiProgressbar(dlData.progressBar);
     freeGuiText(dlData.percentTxt);
-    freeGuiText(dlData.speedTxt);
     freeGuiText(dlData.progressTxt);
     freeGuiBox(cancelBtnBg);
     freeGuiBox(cancelBtnBgHover);
