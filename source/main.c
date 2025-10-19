@@ -1,6 +1,7 @@
 #include "main.h"
 
 #include "config.h"
+#include "filesystem.h"
 #include "gui/text.h"
 #include "gui/video.h"
 #include "menu.h"
@@ -41,7 +42,7 @@ int main(int argc, char** argv)
     printf("\n\t\t\t" APP_NAME " " APP_VERSION "\n\n");
     printf("Initializing\n\n");
 
-    handleInit(fatInitDefault(), "Filesystem...", "\n\nFailed to initialize filesystem\n", 5, true);
+    handleInit(initFat(), "Filesystem...", "\n\nFailed to initialize filesystem\n", 5, true);
     handleInit(initNetworking() == NETWORKING_INIT_SUCCESS, "Networking...", "\n\nFailed to initialize networking:\nwifi connection failed\n", 5, true);
     handleInit((createDir(APPDATA_DIR) && createDir(CACHE_DIR)), "Directories...", "\n\nFailed to initialize directories\n", 5, true);
     handleInit((defaultSettings() && loadSettings()), "Settings...", "\n\nLoaded default settings\n", 3, false);
