@@ -47,8 +47,8 @@ The name should be the display name of the database. The value must be either:
 
 ### Example databases.txt
 ```
-test-db https://example.com/database.txt
-test-db2    /databases/db2.txt
+test-db=https://example.com/database.txt
+test-db2=/databases/db2.txt
 ```
 
 ## Community databases
