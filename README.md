@@ -105,7 +105,7 @@ test-app2,gba,NTSC-U,1.1,Author2,https://example.com/test-app2.zip,test-app2.zip
 
 Change directory
 ```sh
-git clone https://github.com/cavv-dev/Kekatsu-DS.git
+git clone --recursive https://github.com/cavv-dev/Kekatsu-DS.git
 cd Kekatsu-DS
 ```
 Build
